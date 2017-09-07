@@ -1,11 +1,13 @@
 const Router = require('koa-router')()
 const BodyParser = require('koa-bodyparser')
 const path = require("path")
+const convert = require("koa-convert")
 
 const miInit = require('./mi-init')
 const miRender = require('./mi-render')
 const miRouter = require('./mi-router')
 const miStaticFiles = require('./mi-static-files')
+const miService = require('./mi-service')
 const isProduction = process.env.NODE_ENV === 'production'
 
 module.exports = (app) => {
@@ -26,6 +28,7 @@ module.exports = (app) => {
    * 初始化模板上下文 scope
    */
   app.use(miInit())
+  app.use(miService())
 
   /**
    * 处理静态文件

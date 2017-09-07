@@ -1,8 +1,10 @@
 module.exports = {
   index: async function (scope) {
+    var message = await this.service.home.index();
     Object.assign(scope,{
       title: "首页",
-      content: "正常进入首页 Hello World"
+      content: "正常进入首页 Hello World",
+      message: message
     })
     console.log(this.say)
     await this.render("index")
