@@ -28,7 +28,11 @@ module.exports = (app) => {
    * 初始化模板上下文 scope
    */
   app.use(miInit())
-  app.use(miService())
+
+  /**
+   * 初始化service
+   */
+  app.use(miService(path.resolve(__dirname, '../service')))
 
   /**
    * 处理静态文件

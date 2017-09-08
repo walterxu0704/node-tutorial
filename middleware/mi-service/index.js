@@ -1,15 +1,20 @@
 const path = require("path");
 const fs = require('fs');
 
-module.exports = function(dir='service') {// service默认文件夹service，也可以自定义
-    const serviceRootpath = path.join(path.resolve(__dirname, '../../'), dir);
+module.exports = function(dir=path.resolve(__dirname, '../../service')) {// service默认文件夹service，也可以自定义
+    const serviceRootpath = dir;
     var service = {};
     //读取service文件夹下的所有文件并遍历
     fs.readdirSync(serviceRootpath).forEach(filename => {
-        //将文件名中去掉后缀
-        var name = path.basename(filename, path.extname(filename));
-        //读取文件中的内容并赋值绑定
-        service[name] = require(path.join(serviceRootpath, filename));
+        //取出文件的后缀
+        var extname = path.extname(filename);
+        //只处理js文件
+        if (extname === '.js') {
+            //将文件名中去掉后缀
+            var name = path.basename(filename, extname);
+            //读取文件中的内容并赋值绑定
+            service[name] = require(path.join(serviceRootpath, filename));
+        }
     });
 
 
